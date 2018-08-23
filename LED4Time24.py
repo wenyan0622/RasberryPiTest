@@ -238,5 +238,4 @@ while(count<60000):
     showonenum(4,led4)
     count=count+1
 
-
 GPIO.cleanup()
