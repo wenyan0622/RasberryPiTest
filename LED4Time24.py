@@ -34,6 +34,7 @@ def init():
     GPIO.setup(DIGIT3, GPIO.OUT)
     GPIO.setup(DIGIT4, GPIO.OUT)
 
+#全部熄灭
 def reset():
     GPIO.output(DIGIT1, False)
     GPIO.output(DIGIT2, False)
@@ -49,30 +50,32 @@ def reset():
     GPIO.output(LED_G,False)
     GPIO.output(LED_DP,False)
 
+#显示具体位置上的数字，显示第一位关闭其他三位
 def setCount(num):
     if(num==1):
         GPIO.output(DIGIT1, True)
-        # GPIO.output(DIGIT2, False)
-        # GPIO.output(DIGIT3, False)
-        # GPIO.output(DIGIT4, False)
+        GPIO.output(DIGIT2, False)
+        GPIO.output(DIGIT3, False)
+        GPIO.output(DIGIT4, False)
     elif(num==2):
-        # GPIO.output(DIGIT1, False)
+        GPIO.output(DIGIT1, False)
         GPIO.output(DIGIT2, True)
-        # GPIO.output(DIGIT3, False)
-        # GPIO.output(DIGIT4, False)
+        GPIO.output(DIGIT3, False)
+        GPIO.output(DIGIT4, False)
     elif(num==3):
-        # GPIO.output(DIGIT1, False)
-        # GPIO.output(DIGIT2, False)
+        GPIO.output(DIGIT1, False)
+        GPIO.output(DIGIT2, False)
         GPIO.output(DIGIT3, True)
-        # GPIO.output(DIGIT4, False)
+        GPIO.output(DIGIT4, False)
     elif(num==4):
-        # GPIO.output(DIGIT1, False)
-        # GPIO.output(DIGIT2, False)
-        # GPIO.output(DIGIT3, False)
+        GPIO.output(DIGIT1, False)
+        GPIO.output(DIGIT2, False)
+        GPIO.output(DIGIT3, False)
         GPIO.output(DIGIT4, True)
     else:
         print("Set Count ERROR!")
 
+#定义数字显示
 def show_0():
     GPIO.output(LED_A,False)
     GPIO.output(LED_B,False)
@@ -183,6 +186,7 @@ def show_dot(num1):
     GPIO.output(LED_G,True)
     GPIO.output(LED_DP,False)
 
+#显示单个数字
 def showSingleDigit(num):
     if(num == 0):
         show_0()
@@ -207,64 +211,32 @@ def showSingleDigit(num):
     else:
         print("error")
 
+#显示1位数字，参数1：位置，参数2：要显示的数字
 def showonenum(wei,num):
     setCount(wei)
     showSingleDigit(num)
+    time.sleep(0.001)
 
 #開始執行
 init()
-
+print("...init...")
 #初始化
 reset()
-
+print("...reset...")
 count=0
-while(count<10):
+while(count<60000):
     timestr = time.strftime("%M%S", time.localtime())#获取当前时间字符串
+    #获取时间和秒的四位数字
     led1=int(timestr[0])
     led2=int(timestr[1])
     led3=int(timestr[2])
     led4=int(timestr[3])
+    #调用显示
     showonenum(1,led1)
     showonenum(2,led2)
     showonenum(3,led3)
     showonenum(4,led4)
     count=count+1
-    time.sleep(1)
 
-#
-# while True:
-#     print(time.strftime("%H:%M:%S", time.localtime()))
-#     timestr = time.strftime("%M%S", time.localtime())#获取当前时间字符串
-#     led1=int(timestr[0])
-#     led2=int(timestr[1])
-#     led3=int(timestr[2])
-#     led4=int(timestr[3])
-#     print(led1,led2,led3,led4)
-#
-#     GPIO.output(DIGIT1,True)
-#     # GPIO.output(DIGIT2,False)
-#     # GPIO.output(DIGIT3,False)
-#     # GPIO.output(DIGIT4,False)
-#     showSingleDigit(led1) #数码管第1位显示
-#
-#     # GPIO.output(DIGIT1,False)
-#     GPIO.output(DIGIT2,True)
-#     # GPIO.output(DIGIT3,False)
-#     # GPIO.output(DIGIT4,False)
-#     showSingleDigit(led2) #数码管第2位显示
-#
-#     # GPIO.output(DIGIT1,False)
-#     # GPIO.output(DIGIT2,False)
-#     GPIO.output(DIGIT3,True)
-#     # GPIO.output(DIGIT4,False)
-#     showSingleDigit(led3) #数码管第3位显示
-#
-#     # GPIO.output(DIGIT1,False)
-#     # GPIO.output(DIGIT2,False)
-#     # GPIO.output(DIGIT3,False)
-#     GPIO.output(DIGIT4,True)
-#     showSingleDigit(led4) #数码管第4位显示
-#     #showCurrentTime(list)
-#     time.sleep(1)
 
 GPIO.cleanup()
