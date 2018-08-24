@@ -224,7 +224,7 @@ print("...init...")
 reset()
 print("...reset...")
 count=0
-while(count<60000):
+while(count<6000):
     timestr = time.strftime("%M%S", time.localtime())#获取当前时间字符串
     #获取时间和秒的四位数字
     led1=int(timestr[0])
