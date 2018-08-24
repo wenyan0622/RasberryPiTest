@@ -17,7 +17,6 @@ def init():
 def detect():
     count=1
     for count in range(1,100):
-        print("GPIO.input(LightSensor_PIN):",GPIO.input(LightSensor_PIN))
         if GPIO.input(LightSensor_PIN) == True:
             GPIO.output(LED_PIN,True) #检测到灯光则灯亮
             print("light on ...",count)
